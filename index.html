@@ -375,6 +375,17 @@
     <div class="scroll-hint">Scroll</div>
 </header>
 
+<!-- REVIEW -->
+<section style="background: var(--brown-dark); padding: 4rem 2rem;">
+    <div class="section-inner" style="text-align: center; max-width: 700px;">
+        <div style="font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1.5rem;">Featured in the LA Times</div>
+        <blockquote style="margin: 0; padding: 0;">
+            <p style="font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2rem); color: #fff; line-height: 1.4; font-weight: 400; font-style: italic;">&ldquo;At Bánh Xèo Quán, a specialist out in Rosemead, a bánh xèo is splendid.&rdquo;</p>
+        </blockquote>
+        <div style="margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.5); letter-spacing: 0.5px;">— Jonathan Gold, Los Angeles Times</div>
+    </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about" id="about">
     <div class="section-inner">
@@ -574,27 +585,41 @@
     <div class="section-inner">
         <div class="section-label">Visit Us</div>
         <h2 class="section-title">Hours & Contact</h2>
-        <div class="info-grid">
+        <div class="info-grid" style="grid-template-columns: 1fr 1fr;">
 
-            <div class="info-block">
-                <h3>Opening Hours</h3>
-                <table class="hours-table">
-                    <tr><td>Sunday</td><td>Closed</td></tr>
-                    <tr><td>Monday – Friday</td><td>10:00 AM – 3:00 PM</td></tr>
-                    <tr><td>Saturday</td><td>10:00 AM – 3:00 PM</td></tr>
-                </table>
+            <div>
+                <div class="info-block">
+                    <h3>Opening Hours</h3>
+                    <table class="hours-table">
+                        <tr><td>Sunday</td><td>Closed</td></tr>
+                        <tr><td>Monday – Friday</td><td>10:00 AM – 3:00 PM</td></tr>
+                        <tr><td>Saturday</td><td>10:00 AM – 3:00 PM</td></tr>
+                    </table>
+                </div>
+
+                <div class="info-block" style="margin-top: 2rem;">
+                    <h3>Find Us</h3>
+                    <div class="contact-line">
+                        <span class="icon">&#x1F4CD;</span>
+                        <span>8742 Garvey Ave<br>Rosemead, CA 91770</span>
+                    </div>
+                    <div class="contact-line">
+                        <span class="icon">&#x1F4DE;</span>
+                        <a href="tel:+16262882699">(626) 288-2699</a>
+                    </div>
+                </div>
             </div>
 
             <div class="info-block">
-                <h3>Find Us</h3>
-                <div class="contact-line">
-                    <span class="icon">&#x1F4CD;</span>
-                    <span>8742 Garvey Ave<br>Rosemead, CA 91770</span>
-                </div>
-                <div class="contact-line">
-                    <span class="icon">&#x1F4DE;</span>
-                    <a href="tel:+16262882699">(626) 288-2699</a>
-                </div>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3303.8!2d-118.0726!3d34.0806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c5e243e5e7ab%3A0x5a7a5a7a5a7a5a7a!2s8742+Garvey+Ave%2C+Rosemead%2C+CA+91770!5e0!3m2!1sen!2sus!4v1700000000000"
+                    width="100%"
+                    height="100%"
+                    style="border:0; border-radius: 4px; min-height: 300px;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
 
         </div>
