@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BÁNH XÈO QUÁN — Vietnamese Kitchen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --warm-bg: #FAF6F1;
+            --cream: #F5EDE3;
+            --terracotta: #C4704B;
+            --terracotta-dark: #A85A38;
+            --brown-dark: #3B2A1F;
+            --brown-medium: #5C4033;
+            --olive: #6B7A4E;
+            --text: #3B2A1F;
+            --text-light: #7A6B5D;
+            --gold: #C9A96E;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(250, 246, 241, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 42, 31, 0.08);
+            transition: box-shadow 0.3s;
+        }
+        nav.scrolled { box-shadow: 0 2px 20px rgba(59, 42, 31, 0.08); }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: #2A7A6E;
+            padding: 0.4rem 0.7rem 0.3rem;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--terracotta); }
+
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .menu-toggle span {
+            display: block; width: 22px; height: 2px;
+            background: var(--brown-dark); margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(196, 112, 75, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(107, 122, 78, 0.05) 0%, transparent 50%),
+                var(--warm-bg);
+        }
+        .hero-accent {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            background: #2A7A6E;
+            display: inline-block;
+            padding: 1.5rem 3rem 1.2rem;
+        }
+        .hero h1 .subtitle {
+            display: block;
+            font-size: 0.32em;
+            letter-spacing: 6px;
+            font-weight: 500;
+            border-top: 2px solid rgba(255,255,255,0.5);
+            margin-top: 0.6rem;
+            padding-top: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+        }
+        .hero-cta {
+            display: inline-block;
+            padding: 0.9rem 2.5rem;
+            background: var(--terracotta);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: background 0.3s;
+        }
+        .hero-cta:hover { background: var(--terracotta-dark); }
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-light);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+        .scroll-hint::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 30px;
+            background: var(--text-light);
+            margin: 0.5rem auto 0;
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 0.7; transform: scaleY(1.3); }
+        }
+
+        /* ── SECTIONS ── */
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 900px; margin: 0 auto; }
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--brown-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* ── ABOUT ── */
+        .about { background: var(--cream); }
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .about-image {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 4/5;
+            display: block;
+        }
+
+        /* ── MENU ── */
+        .menu-section { background: var(--warm-bg); }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        .menu-category h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--brown-dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(59, 42, 31, 0.1);
+        }
+        .menu-item {
+            margin-bottom: 1.25rem;
+        }
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.2rem;
+        }
+        .menu-item-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--brown-dark);
+        }
+        .menu-item-price {
+            font-size: 0.9rem;
+            color: var(--terracotta);
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+        .menu-item-dots {
+            flex: 1;
+            border-bottom: 1px dotted rgba(59, 42, 31, 0.15);
+            margin: 0 0.5rem;
+            min-width: 20px;
+            position: relative;
+            top: -4px;
+        }
+        .menu-item-desc {
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+
+        /* ── HOURS & CONTACT ── */
+        .info-section { background: var(--cream); }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        .info-block h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--brown-dark);
+            margin-bottom: 1rem;
+        }
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .hours-table tr { border-bottom: 1px solid rgba(59, 42, 31, 0.06); }
+        .hours-table td {
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        .hours-table td:last-child { text-align: right; }
+        .contact-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        .contact-line .icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+        }
+        .contact-line a {
+            color: var(--terracotta);
+            text-decoration: none;
+        }
+        .contact-line a:hover { text-decoration: underline; }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--brown-dark);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        footer .footer-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(250, 246, 241, 0.98);
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid rgba(59, 42, 31, 0.08);
+            }
+            .menu-toggle { display: block; }
+            .about-content { grid-template-columns: 1fr; }
+            .about-image { max-height: 300px; }
+            .menu-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .info-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <div class="nav-logo">BÁNH XÈO QUÁN</div>
+        <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#info">Visit</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-accent">&nbsp;</div>
+    <h1>BÁNH XÈO QUÁN<span class="subtitle">Vietnamese Restaurant</span></h1>
+    <p>We are a family run restaurant that specializes in crispy and savory Vietnamese crepes.</p>
+    <a href="#menu" class="hero-cta">View Our Menu</a>
+    <div class="scroll-hint">Scroll</div>
+</header>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <div class="section-inner">
+        <div class="about-content">
+            <div class="about-text">
+                <div class="section-label">Our Story</div>
+                <h2 class="section-title">A Taste of Home</h2>
+                <p>Bánh Xèo Quán is a family run restaurant in Rosemead, California, specializing in crispy and savory Vietnamese crepes.</p>
+                <p>Every dish on our menu is prepared from scratch using fresh ingredients and recipes passed down through generations. From the sizzle of our signature bánh xèo to our hearty noodle soups, we cook with the same care as if you were sitting at our family table.</p>
+                <p>We believe good food brings people together. Pull up a chair — you're family here.</p>
+            </div>
+            <div class="about-image"><img src="banh-xeo.jpg" alt="Crispy bánh xèo crepe with fresh herbs and fish sauce"></div>
+        </div>
+    </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+    <div class="section-inner">
+        <div class="section-label">The Menu</div>
+        <h2 class="section-title">What We Serve</h2>
+        <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.5rem;">Tax is already included in each item. Prices subject to change without notice.</p>
+        <div class="menu-grid">
+
+            <div class="menu-category">
+                <h3>Bánh Xèo (Crepes)</h3>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Bánh Xèo</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$17</span>
+                    </div>
+                    <div class="menu-item-desc">Shrimp, pork, mushroom, bean sprout, eggs & onion</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Bánh Xèo Cá</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$17</span>
+                    </div>
+                    <div class="menu-item-desc">Crepe with filet fish</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Bánh Xèo Chay (Vegan)</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$15</span>
+                    </div>
+                    <div class="menu-item-desc">Onion, tofu, mushroom, bean sprout & mung bean</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Bánh Tráng (Rice Paper)</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$2</span>
+                    </div>
+                    <div class="menu-item-desc">8 pieces</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Thêm 1 Bịch Rau (Extra Veggies)</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$5</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Fish Sauce Bottle (ready to eat)</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$14</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Fish Sauce Cup (to go)</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h3>Main Dishes</h3>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Mì Vịt Tiềm</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$16</span>
+                    </div>
+                    <div class="menu-item-desc">Duck & egg noodles soup</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Mì Khô Dầu Hào Tôm Thịt</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$14</span>
+                    </div>
+                    <div class="menu-item-desc">Egg noodles with shrimp, pork & oyster sauce (small bowl of soup on a side)</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Cơm Đỏ Gà Con Chiên Giòn</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$14</span>
+                    </div>
+                    <div class="menu-item-desc">Tomato rice with cornish hen</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name" style="margin-left: 1rem;">Extra Bowl of Red Rice</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$4</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <span class="menu-item-name">Tôm Càng Kho Tàu</span>
+                        <span class="menu-item-dots"></span>
+                        <span class="menu-item-price">$20</span>
+                    </div>
+                    <div class="menu-item-desc">Prawn with steam rice & steam veggies</div>
+                </div>
+            </div>
+
+            <div class="menu-category" style="grid-column: 1 / -1;">
+                <h3>Beverages</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 3rem;">
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Thai Tea</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$3</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Đậu Xanh Lá Dứa</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$4</span>
+                        </div>
+                        <div class="menu-item-desc">Pandan mung bean drink</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Soda Chanh Muối</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$3.50</span>
+                        </div>
+                        <div class="menu-item-desc">Soda lemon with plum</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Cafe Sữa Đá</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$4</span>
+                        </div>
+                        <div class="menu-item-desc">French iced coffee</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Coke / Sprite / Pepsi / Sunkist</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$1.50</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Coke / Sprite / Pepsi / Sunkist with Ice</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$2</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Corona / Heineken</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$3.75</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <span class="menu-item-name">Nước Dưa Hấu</span>
+                            <span class="menu-item-dots"></span>
+                            <span class="menu-item-price">$3.75</span>
+                        </div>
+                        <div class="menu-item-desc">Fresh watermelon juice (seasonal)</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="info-section" id="info">
+    <div class="section-inner">
+        <div class="section-label">Visit Us</div>
+        <h2 class="section-title">Hours & Contact</h2>
+        <div class="info-grid">
+
+            <div class="info-block">
+                <h3>Opening Hours</h3>
+                <table class="hours-table">
+                    <tr><td>Sunday</td><td>Closed</td></tr>
+                    <tr><td>Monday – Friday</td><td>10:00 AM – 3:00 PM</td></tr>
+                    <tr><td>Saturday</td><td>10:00 AM – 3:00 PM</td></tr>
+                </table>
+            </div>
+
+            <div class="info-block">
+                <h3>Find Us</h3>
+                <div class="contact-line">
+                    <span class="icon">&#x1F4CD;</span>
+                    <span>8742 Garvey Ave<br>Rosemead, CA 91770</span>
+                </div>
+                <div class="contact-line">
+                    <span class="icon">&#x1F4DE;</span>
+                    <a href="tel:+16262882699">(626) 288-2699</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-name">BÁNH XÈO QUÁN</div>
+    <p>&copy; 2026 Bánh Xèo Quán. All rights reserved.</p>
+</footer>
+
+<script>
+    // Navbar shadow on scroll
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>
